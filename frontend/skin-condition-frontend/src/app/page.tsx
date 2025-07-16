@@ -68,16 +68,16 @@ export default function Home() {
 
       </div>
 
-      <footer className="text-gray-900 py-6 text-center bg-gradient-to-t from-green-50 via-white to-blue-50 mt-12 border-t border-gray-200">
-        <p className="text-lg mb-2 font-semibold">Connect with me</p>
-        <div className="space-x-8 flex justify-center">
+      <footer className="text-gray-900 py-3 text-center bg-gradient-to-t from-white via-white to-blue-50 border-t border-gray-200 mt-auto">
+        <p className="text-base mb-1 font-semibold">Connect with me</p>
+        <div className="space-x-6 flex justify-center">
           <SocialIcon
             url="https://github.com/BenjaminCMorka"
             target="_blank"
             rel="noopener noreferrer"
             bgColor="#000000"
             fgColor="#ffffff"
-            style={{ height: 40, width: 40 }}
+            style={{ height: 36, width: 36 }}
           />
           <SocialIcon
             url="https://linkedin.com/in/benjamin-morka"
@@ -85,7 +85,7 @@ export default function Home() {
             rel="noopener noreferrer"
             bgColor="#0A66C2"
             fgColor="#ffffff"
-            style={{ height: 40, width: 40 }}
+            style={{ height: 36, width: 36 }}
           />
         </div>
       </footer>
