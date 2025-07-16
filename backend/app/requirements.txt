@@ -5,3 +5,4 @@ torchvision
 pillow
 requests
 python-multipart
+boto3
