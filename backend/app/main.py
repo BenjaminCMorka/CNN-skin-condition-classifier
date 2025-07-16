@@ -19,12 +19,13 @@ app.add_middleware(
 
 
 model = CNN()
-model_path = "best_model.pth"  
+model_path = "quantized_model.pt"
 
 if not os.path.exists(model_path):
     raise FileNotFoundError(f"Model file not found at {model_path}")
+torch.backends.quantized.engine = 'qnnpack'
 
-model.load_state_dict(torch.load(model_path, map_location='cpu'))
+model = torch.jit.load(model_path)
 model.eval()
 
 @app.get("/health")

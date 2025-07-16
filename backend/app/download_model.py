@@ -4,8 +4,8 @@ import sys
 from botocore.exceptions import ClientError, NoCredentialsError
 
 S3_BUCKET = "dermnet-model"
-S3_KEY = "best_model.pth"
-MODEL_PATH = "best_model.pth"
+S3_KEY = "quantized_model.pt"
+MODEL_PATH = "quantized_model.pt"
 
 def download_model():
     s3_bucket = S3_BUCKET
