@@ -1,7 +1,7 @@
 import os
 import requests
 
-MODEL_URL = "https://github.com/BenjaminCMorka/skin-disease-classifier/releases/download/v1.0/best_model.pth"
+MODEL_URL = "https://github.com/BenjaminCMorka/CNN-skin-condition-classifier/releases/download/v1.0/best_model.pth"
 MODEL_PATH = "src/best_model.pth" 
 
 def download_model():
