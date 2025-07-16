@@ -45,32 +45,8 @@ src/
 
 ---
 
-## Setup instructions
-
-Clone the Repository:
-git clone https://github.com/BenjaminCMorka/CNN-skin-condition-classifier.git
-cd skin-condition-classifier/backend/app
-
-Install Python Backend Dependencies:
-pip install -r requirements.txt
-
-Download Model Weights
-Python download_model.py
-
-Download and Prepare Dataset
-cd ../../src
-python download_dataset.py
-
 ## Running the Web Application
-
-Backend (FastAPI):
-from the root directory, enter command uvicorn main:app --reload
-
-Frontend (React & Next.js):
-from the root directory, enter commands:
-cd frontend
-npm install
-npm run dev
+The Web Application can be found at: [https://skin-condition-classifier.vercel.app](https://skin-condition-classifier.vercel.app)
 
 ---
 
