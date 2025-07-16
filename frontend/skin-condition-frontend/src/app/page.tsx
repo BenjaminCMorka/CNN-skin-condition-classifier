@@ -4,17 +4,21 @@ import { SocialIcon } from "react-social-icons";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50 flex flex-col">
-      <main className="flex-1 max-w-4xl mx-auto px-4 py-12 w-full">
+    <main className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
+
+      <div className="max-w-4xl mx-auto px-4 py-12">
+
         <div className="text-center mb-12">
           <h2 className="text-5xl font-bold text-gray-900 mb-6 leading-tight">
             Skin Condition
             <span className="block text-pink-600">Classification</span>
           </h2>
+          
           <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-8 leading-relaxed">
             Upload a clear image of your skin condition and receive an AI-powered analysis: acne/rosacea or eczema. 
           </p>
         </div>
+
         <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8 mb-8">
           <div className="flex items-center gap-3 mb-6">
             <div className="p-2 bg-green-100 rounded-lg">
@@ -22,8 +26,10 @@ export default function Home() {
             </div>
             <h3 className="text-xl font-semibold text-gray-900">Upload Image</h3>
           </div>
+          
           <ImageUpload />
         </div>
+
         <div className="bg-amber-50 border border-amber-200 rounded-xl p-6">
           <div className="flex gap-3">
             <AlertCircle className="h-5 w-5 text-amber-600 flex-shrink-0 mt-0.5" />
@@ -37,6 +43,7 @@ export default function Home() {
             </div>
           </div>
         </div>
+
         <div className="bg-gray-50 rounded-xl p-8 mt-12">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Tips for Best Results</h3>
           <div className="grid md:grid-cols-2 gap-4">
@@ -58,17 +65,19 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </main>
-      <footer className="text-gray-900 py-3 text-center bg-gradient-to-t from-white via-white to-blue-50 border-t border-gray-200 mt-auto">
-        <p className="text-base mb-1 font-semibold">Connect with me</p>
-        <div className="space-x-6 flex justify-center">
+
+      </div>
+
+      <footer className="text-gray-900 py-6 text-center bg-gradient-to-t from-green-50 via-white to-blue-50 mt-12 border-t border-gray-200">
+        <p className="text-lg mb-2 font-semibold">Connect with me</p>
+        <div className="space-x-8 flex justify-center">
           <SocialIcon
             url="https://github.com/BenjaminCMorka"
             target="_blank"
             rel="noopener noreferrer"
             bgColor="#000000"
             fgColor="#ffffff"
-            style={{ height: 36, width: 36 }}
+            style={{ height: 40, width: 40 }}
           />
           <SocialIcon
             url="https://linkedin.com/in/benjamin-morka"
@@ -76,10 +85,11 @@ export default function Home() {
             rel="noopener noreferrer"
             bgColor="#0A66C2"
             fgColor="#ffffff"
-            style={{ height: 36, width: 36 }}
+            style={{ height: 40, width: 40 }}
           />
         </div>
       </footer>
-    </div>
+      
+    </main>
   );
 }
