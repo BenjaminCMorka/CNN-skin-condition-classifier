@@ -11,7 +11,7 @@ export default function Home() {
 
           
           <h2 className="text-5xl font-bold text-gray-900 mb-6 leading-tight">
-            Skin Disease
+            Skin Condition
             <span className="block text-blue-600">Classification</span>
           </h2>
           
