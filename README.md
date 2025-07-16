@@ -42,6 +42,35 @@ src/
 ├── augmentation.py         # Image augmentation utilities
 
 ```
+
+---
+
+## Setup instructions
+
+Clone the Repository:
+git clone https://github.com/BenjaminCMorka/CNN-skin-condition-classifier.git
+cd skin-condition-classifier/backend/app
+
+Install Python Backend Dependencies:
+pip install -r requirements.txt
+
+Download Model Weights
+Python download_model.py
+
+Download and Prepare Dataset
+cd ../../src
+python download_dataset.py
+
+## Running the Web Application
+
+Backend (FastAPI):
+from the root directory, enter command uvicorn main:app --reload
+
+Frontend (React & Next.js):
+cd frontend
+npm install
+npm run dev
+
 ---
 
 ## Tech Stack
