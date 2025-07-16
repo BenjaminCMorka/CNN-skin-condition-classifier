@@ -27,6 +27,7 @@ This project aims to develop an accurate and robust image classifier to assist d
 - CNN architecture customized for skin lesion image classification
 - Trained with data augmentation for improved generalization
 - Model weights saved as `best_model.pth`
+- Achieved 80% classification accuracy on the test set distinguishing Acne and Rosacea from Eczema
 
 ---
 
