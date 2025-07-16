@@ -12,8 +12,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY main.py .
 COPY model.py .
 COPY utils.py .
-COPY download_model.py .
+COPY quantized_model.pt .
 
 EXPOSE 8000
 
-CMD ["sh", "-c", "python download_model.py && python -m uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}"]
+CMD ["python", "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "${PORT:-8000}"]
