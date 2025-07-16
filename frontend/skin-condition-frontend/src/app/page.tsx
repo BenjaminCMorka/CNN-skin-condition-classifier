@@ -3,7 +3,7 @@ import { Shield, Stethoscope, Upload, AlertCircle } from "lucide-react";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-blue-600">
+    <main className="min-h-screen bg-blue-900">
 
       <div className="max-w-4xl mx-auto px-4 py-12">
 
