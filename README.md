@@ -39,7 +39,6 @@ src/
 ├── dataset.py              # Custom PyTorch Dataset for loading images
 ├── model.py                # CNN model architecture definition
 ├── train.py                # Training and validation pipeline
-├── download_model.py       # Download pretrained model weights from GitHub Releases
 ├── augmentation.py         # Image augmentation utilities
 
 ```
