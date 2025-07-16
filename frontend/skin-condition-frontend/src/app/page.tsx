@@ -1,6 +1,6 @@
 import ImageUpload from "@/app/ImageUpload";
 import { Shield, Stethoscope, Upload, AlertCircle } from "lucide-react";
-import { SocialIcon } from "react-social-icons";  // <-- import this
+import { SocialIcon } from "react-social-icons"; 
 
 export default function Home() {
   return (
@@ -89,7 +89,7 @@ export default function Home() {
           />
         </div>
       </footer>
-
+      
     </main>
   );
 }
