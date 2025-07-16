@@ -6,4 +6,5 @@ pillow
 requests
 python-multipart
 boto3
+numpy<2
 --extra-index-url https://download.pytorch.org/whl/cpu
