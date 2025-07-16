@@ -12,7 +12,7 @@ const ImageUpload: React.FC = () => {
     if (e.target.files && e.target.files[0]) {
       setFile(e.target.files[0]);
       setPreview(URL.createObjectURL(e.target.files[0]));
-      setResult(null); // Clear previous result
+      setResult(null); 
     }
   };
 
@@ -45,7 +45,6 @@ const ImageUpload: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* File Input Area */}
       <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-blue-400 transition-colors">
         <input
           type="file"
@@ -122,7 +121,6 @@ const ImageUpload: React.FC = () => {
         )}
       </div>
 
-      {/* Result Display */}
       {result && (
         <div className={`p-6 rounded-xl border-2 ${
           result.includes('Error') 
