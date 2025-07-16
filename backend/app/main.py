@@ -9,7 +9,7 @@ from utils import preprocess_image
 
 app = FastAPI()
 
-# Enable CORS for your frontend domain (adjust as needed)
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  
@@ -18,7 +18,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Load model once at startup
+
 model = CNN()
 model_path = os.path.join(os.path.dirname(__file__), "best_model.pth")
 model.load_state_dict(torch.load(model_path))
