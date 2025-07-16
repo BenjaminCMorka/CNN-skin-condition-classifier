@@ -6,7 +6,7 @@ import os
 import torch
 from model import CNN
 from utils import preprocess_image
-from download_model import download_model
+from download_model import download_model_from_s3
 
 app = FastAPI()
 
@@ -19,42 +19,28 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Global variables for lazy loading
-model = None
-model_loaded = False
+# Download model if not present, then load it
+model_path = os.path.join(os.path.dirname(__file__), "best_model.pth")
 
-def load_model():
-    global model, model_loaded
-    if not model_loaded:
-        # Download model if it doesn't exist
-        download_model()
-        
-        # Load model
-        model = CNN()
-        model_path = os.path.join(os.path.dirname(__file__), "best_model.pth")
-        model.load_state_dict(torch.load(model_path, map_location='cpu'))
-        model.eval()
-        model_loaded = True
-    return model
+# Ensure model is downloaded before loading
+download_model_from_s3()
+
+# Load model once at startup
+model = CNN()
+model.load_state_dict(torch.load(model_path))
+model.eval()
 
 @app.post("/predict")
 async def predict(file: UploadFile = File(...)):
-    # Load model on first request
-    current_model = load_model()
-    
     image_bytes = await file.read()
     image = Image.open(io.BytesIO(image_bytes)).convert("RGB")
     input_tensor = preprocess_image(image).unsqueeze(0)  
     
     with torch.no_grad():
-        outputs = current_model(input_tensor)
+        outputs = model(input_tensor)
         _, predicted = torch.max(outputs, 1)
     
     labels = {0: "Acne and Rosacea", 1: "Eczema"}
     prediction = labels[int(predicted.item())]
     
     return {"prediction": prediction}
-
-@app.get("/health")
-async def health_check():
-    return {"status": "healthy"}
