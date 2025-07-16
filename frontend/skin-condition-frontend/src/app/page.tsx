@@ -1,5 +1,6 @@
 import ImageUpload from "@/app/ImageUpload";
 import { Shield, Stethoscope, Upload, AlertCircle } from "lucide-react";
+import { SocialIcon } from "react-social-icons";  // <-- import this
 
 export default function Home() {
   return (
@@ -8,8 +9,6 @@ export default function Home() {
       <div className="max-w-4xl mx-auto px-4 py-12">
 
         <div className="text-center mb-12">
-
-          
           <h2 className="text-5xl font-bold text-gray-900 mb-6 leading-tight">
             Skin Condition
             <span className="block text-blue-600">Classification</span>
@@ -66,7 +65,31 @@ export default function Home() {
             </div>
           </div>
         </div>
+
       </div>
+
+      <footer className="text-gray-900 py-6 text-center bg-gradient-to-t from-green-50 via-white to-blue-50 mt-12 border-t border-gray-200">
+        <p className="text-lg mb-2 font-semibold">Connect with me</p>
+        <div className="space-x-8 flex justify-center">
+          <SocialIcon
+            url="https://github.com/BenjaminCMorka"
+            target="_blank"
+            rel="noopener noreferrer"
+            bgColor="#000000"
+            fgColor="#ffffff"
+            style={{ height: 40, width: 40 }}
+          />
+          <SocialIcon
+            url="https://linkedin.com/in/benjamin-morka"
+            target="_blank"
+            rel="noopener noreferrer"
+            bgColor="#0A66C2"
+            fgColor="#ffffff"
+            style={{ height: 40, width: 40 }}
+          />
+        </div>
+      </footer>
+
     </main>
   );
 }
