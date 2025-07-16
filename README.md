@@ -67,6 +67,7 @@ Backend (FastAPI):
 from the root directory, enter command uvicorn main:app --reload
 
 Frontend (React & Next.js):
+from the root directory, enter commands:
 cd frontend
 npm install
 npm run dev
