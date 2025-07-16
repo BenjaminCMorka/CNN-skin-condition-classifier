@@ -24,7 +24,7 @@ const ImageUpload: React.FC = () => {
     formData.append('file', file);
 
     try {
-      const response = await fetch('https://cnn-skin-condition-classifier.onrender.com', {
+      const response = await fetch('https://cnn-skin-condition-classifier.onrender.com/predict', {
         method: 'POST',
         body: formData,
       });
