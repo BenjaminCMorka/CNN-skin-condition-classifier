@@ -11,7 +11,7 @@ export default function Home() {
         <div className="text-center mb-12">
           <h2 className="text-5xl font-bold text-gray-900 mb-6 leading-tight">
             Skin Condition
-            <span className="block text-blue-600">Classification</span>
+            <span className="block text-pink-600">Classification</span>
           </h2>
           
           <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-8 leading-relaxed">

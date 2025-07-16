@@ -1,5 +1,3 @@
-# utils.py
-
 from PIL import Image
 import torchvision.transforms as transforms
 
