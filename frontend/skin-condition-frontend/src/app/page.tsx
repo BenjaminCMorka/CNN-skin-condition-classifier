@@ -1,36 +1,36 @@
- import ImageUpload from "@/app/ImageUpload";
-import { Shield, Stethoscope, Upload, AlertCircle } from "lucide-react";
+import { Shield, Stethoscope, Upload, AlertCircle, Github, Linkedin } from "lucide-react";
+
+const ImageUpload = () => {
+  return (
+    <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+      <Upload className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+      <p className="text-gray-600">Click or drag to upload an image</p>
+    </div>
+  );
+};
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-blue-900">
-
+    <main className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
       <div className="max-w-4xl mx-auto px-4 py-12">
-
         <div className="text-center mb-12">
-
-          
-          <h2 className="text-5xl font-bold text-white mb-6 leading-tight">
+          <h2 className="text-5xl font-bold text-gray-900 mb-6 leading-tight">
             Skin Condition
             <span className="block text-pink-600">Classification</span>
           </h2>
-          
-          <p className="text-xl text-gray-200 max-w-2xl mx-auto mb-8 leading-relaxed">
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-8 leading-relaxed">
             Upload a clear image of your skin condition and receive an AI-powered analysis: acne/rosacea or eczema. 
           </p>
         </div>
-
         <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8 mb-8">
           <div className="flex items-center gap-3 mb-6">
-            <div className="p-2 bg-blue-100 rounded-lg">
-              <Upload className="h-5 w-5 text-blue-600" />
+            <div className="p-2 bg-green-100 rounded-lg">
+              <Upload className="h-5 w-5 text-green-600" />
             </div>
-            <h3 className="text-xl font-semibold text-gray-200">Upload Image</h3>
+            <h3 className="text-xl font-semibold text-gray-900">Upload Image</h3>
           </div>
-          
           <ImageUpload />
         </div>
-
         <div className="bg-amber-50 border border-amber-200 rounded-xl p-6">
           <div className="flex gap-3">
             <AlertCircle className="h-5 w-5 text-amber-600 flex-shrink-0 mt-0.5" />
@@ -44,7 +44,6 @@ export default function Home() {
             </div>
           </div>
         </div>
-
         <div className="bg-gray-50 rounded-xl p-8 mt-12">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Tips for Best Results</h3>
           <div className="grid md:grid-cols-2 gap-4">
@@ -67,6 +66,27 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <footer className="bg-gray-50 text-gray-700 py-4 text-center border-t border-gray-200">
+        <p className="text-sm mb-2">Connect with me</p>
+        <div className="flex justify-center space-x-4">
+          <a
+            href="https://github.com/BenjaminCMorka"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-gray-600 hover:text-gray-800 transition-colors duration-200"
+          >
+            <Github className="h-5 w-5" />
+          </a>
+          <a
+            href="https://linkedin.com/in/benjamin-morka"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-gray-600 hover:text-blue-600 transition-colors duration-200"
+          >
+            <Linkedin className="h-5 w-5" />
+          </a>
+        </div>
+      </footer>
     </main>
   );
-} 
+}
