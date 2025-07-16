@@ -6,11 +6,9 @@ import os
 import torch
 from model import CNN
 from utils import preprocess_image
-from download_model import download_model_from_s3
 
 app = FastAPI()
 
-# Enable CORS for your frontend domain (adjust as needed)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  
@@ -19,16 +17,19 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Download model if not present, then load it
-model_path = os.path.join(os.path.dirname(__file__), "best_model.pth")
 
-# Ensure model is downloaded before loading
-download_model_from_s3()
-
-# Load model once at startup
 model = CNN()
-model.load_state_dict(torch.load(model_path))
+model_path = "best_model.pth"  
+
+if not os.path.exists(model_path):
+    raise FileNotFoundError(f"Model file not found at {model_path}")
+
+model.load_state_dict(torch.load(model_path, map_location='cpu'))
 model.eval()
+
+@app.get("/health")
+async def health():
+    return {"status": "healthy"}
 
 @app.post("/predict")
 async def predict(file: UploadFile = File(...)):
