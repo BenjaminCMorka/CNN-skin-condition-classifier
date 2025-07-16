@@ -1,0 +1,49 @@
+# Skin Condition Classifier
+
+Skin Condition Classifier is a deep learning project that uses convolutional neural networks (CNNs) to classify images of skin conditions, focusing on distinguishing **Acne and Rosacea** from **Eczema**. The project utilizes the **DermNet** dataset and provides an end-to-end pipeline for data preparation, model training, and inference.
+
+---
+
+## Project Overview
+
+This project aims to develop an accurate and robust image classifier to assist dermatology diagnostics by automatically categorizing and labelling skin condistion images. Leveraging a CNN architecture trained on curated subsets of the DermNet dataset, the model learns to recognize visual patterns unique to different skin conditions.
+
+---
+
+## Dataset
+
+- **Source:** [DermNet Dataset by shubhamgoel27 on Kaggle](https://www.kaggle.com/datasets/shubhamgoel27/dermnet)
+- **Subset Used:** Only two categories retained:
+  - *Acne and Rosacea Photos*  
+  - *Eczema Photos*
+- **Data Split:** Organized into `train` and `test` folders under `data/processed/`
+- Images are preprocessed and filtered for quality and consistency.
+
+---
+
+## Model
+
+- Implemented in **PyTorch**
+- CNN architecture customized for skin lesion image classification
+- Trained with data augmentation for improved generalization
+- Model weights saved as `best_model.pth`
+
+---
+
+## Code Structure
+
+```bash
+src/
+├── download_dataset.py     # Download and prepare dataset filtered by classes
+├── dataset.py              # Custom PyTorch Dataset for loading images
+├── model.py                # CNN model architecture definition
+├── train.py                # Training and validation pipeline
+├── download_model.py       # Download pretrained model weights from GitHub Releases
+├── augmentation.py         # Image augmentation utilities
+
+```
+---
+
+## Tech Stack
+
+![Python](https://img.shields.io/badge/Python-3670A0?style=for-the-badge&logo=python&logoColor=white) 
