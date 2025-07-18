@@ -48,7 +48,7 @@ async def predict(file: UploadFile = File(...)):
 
         labels = {0: "Acne and Rosacea", 1: "Eczema"}
 
-        if confidence < 0.6:
+        if confidence < 0.7:
             prediction = "None of the Above"
         else:
             prediction = labels.get(int(predicted.item()), "None of the Above")
