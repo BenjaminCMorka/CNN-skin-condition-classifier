@@ -1,0 +1,14 @@
+{
+  "original_model_path": "best.pth",
+  "compressed_model_path": "model_compressed.pt",
+  "original_size_mb": 98.36240100860596,
+  "compressed_size_mb": 24.8812255859375,
+  "size_reduction_percent": 74.7045361532395,
+  "original_inference_time_ms": 7.6604485511779785,
+  "compressed_inference_time_ms": 7.7149128913879395,
+  "speed_improvement": 0.9929403817027204,
+  "compression_method": "Dynamic Quantization (qnnpack)",
+  "save_format": "TorchScript (.pt)",
+  "num_classes": 2,
+  "quantization_supported": true
+}
