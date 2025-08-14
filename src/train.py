@@ -1,170 +1,137 @@
-import argparse
 import os
-import random
-from time import time
-
+import time
+import logging
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from torch.utils.data import DataLoader
-from torchvision import datasets
+from torch.utils.data import DataLoader, WeightedRandomSampler
+from dataset import DermNetDataset  
+from model import CNN
+from augmentation import get_enhanced_transforms  
+import numpy as np
 
-from augmentation import get_transforms
-from model import get_model, save_checkpoint
+logging.basicConfig(
+    level=logging.INFO,
+    format='[%(asctime)s] %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
 
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'processed'))
+train_dir = os.path.join(BASE_DIR, 'train')
+val_dir = os.path.join(BASE_DIR, 'test')
 
-def set_seed(seed: int = 42):
-    random.seed(seed)
-    torch.manual_seed(seed)
-    torch.cuda.manual_seed_all(seed)
-    torch.backends.cudnn.deterministic = True
-    torch.backends.cudnn.benchmark = False
+def get_sampler(labels):
+    class_sample_count = np.bincount(labels)
+    weights = 1. / class_sample_count
+    sample_weights = weights[labels]
+    sampler = WeightedRandomSampler(weights=sample_weights, num_samples=len(sample_weights), replacement=True)
+    return sampler
 
-
-@torch.no_grad()
-def evaluate(model, loader, device):
-    model.eval()
-    correct = 0
-    total = 0
-    loss_sum = 0.0
-    criterion = nn.CrossEntropyLoss()
-    for images, labels in loader:
-        images, labels = images.to(device), labels.to(device)
-        outputs = model(images)
-        loss = criterion(outputs, labels)
-        loss_sum += loss.item() * images.size(0)
-        _, preds = outputs.max(1)
-        correct += (preds == labels).sum().item()
-        total += labels.size(0)
-    avg_loss = loss_sum / max(total, 1)
-    acc = correct / max(total, 1)
-    return avg_loss, acc
-
-
-def train_one_epoch(model, loader, optimizer, device):
+def train(model, device, train_loader, criterion, optimizer):
     model.train()
-    criterion = nn.CrossEntropyLoss()
     running_loss = 0.0
     correct = 0
-    total = 0
 
-    for images, labels in loader:
+    for images, labels in train_loader:
         images, labels = images.to(device), labels.to(device)
 
-        optimizer.zero_grad(set_to_none=True)
+        optimizer.zero_grad()
         outputs = model(images)
         loss = criterion(outputs, labels)
         loss.backward()
         optimizer.step()
 
         running_loss += loss.item() * images.size(0)
-        _, preds = outputs.max(1)
-        correct += (preds == labels).sum().item()
-        total += labels.size(0)
+        _, preds = torch.max(outputs, 1)
+        correct += torch.sum(preds == labels.data)
 
-    avg_loss = running_loss / max(total, 1)
-    acc = correct / max(total, 1)
-    return avg_loss, acc
+    epoch_loss = running_loss / len(train_loader.dataset)
+    epoch_acc = correct.double() / len(train_loader.dataset)
 
+    return epoch_loss, epoch_acc.item()
 
-@torch.no_grad()
-def evaluate_with_neither(model, loader, device, class_names, threshold: float):
+def validate(model, device, val_loader, criterion):
     model.eval()
-    softmax = nn.Softmax(dim=1)
+    running_loss = 0.0
+    correct = 0
 
-    total = 0
-    confident_correct = 0
-    neither_count = 0
+    with torch.no_grad():
+        for images, labels in val_loader:
+            images, labels = images.to(device), labels.to(device)
+            
+            outputs = model(images)
+            loss = criterion(outputs, labels)
 
-    for images, labels in loader:
-        images = images.to(device)
-        labels = labels.to(device)
+            running_loss += loss.item() * images.size(0)
+            _, preds = torch.max(outputs, 1)
+            correct += torch.sum(preds == labels.data)
 
-        logits = model(images)
-        probs = softmax(logits)
-        confs, preds = probs.max(dim=1)
+    epoch_loss = running_loss / len(val_loader.dataset)
+    epoch_acc = correct.double() / len(val_loader.dataset)
 
-        for i in range(labels.size(0)):
-            total += 1
-            if confs[i].item() < threshold:
-                neither_count += 1
-                continue
-            if preds[i].item() == labels[i].item():
-                confident_correct += 1
-
-    confident_acc = confident_correct / max((total - neither_count), 1)
-    neither_rate = neither_count / max(total, 1)
-
-    return {
-        "total_samples": total,
-        "neither_count": neither_count,
-        "neither_rate": round(neither_rate, 4),
-        "confident_accuracy": round(confident_acc, 4),
-    }
-
+    return epoch_loss, epoch_acc.item()
 
 def main():
-    parser = argparse.ArgumentParser(description="Train custom CNN for acne/rosacea vs eczema.")
-    parser.add_argument("--data_dir", type=str, default="data")
-    parser.add_argument("--epochs", type=int, default=10)
-    parser.add_argument("--batch_size", type=int, default=32)
-    parser.add_argument("--lr", type=float, default=1e-4)
-    parser.add_argument("--num_workers", type=int, default=4)
-    parser.add_argument("--image_size", type=int, default=224)
-    parser.add_argument("--threshold", type=float, default=0.6)
-    parser.add_argument("--out", type=str, default="model.pth")
-    parser.add_argument("--seed", type=int, default=42)
-    parser.add_argument("--train_dir", type=str, default="train")
-    parser.add_argument("--val_dir", type=str, default="val")
-    args = parser.parse_args()
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    logging.info(f'Using device: {device}')
 
-    set_seed(args.seed)
+    # Use enhanced transforms from augmentation.py
+    train_transform = get_enhanced_transforms(mode='train', image_size=224)
+    val_transform = get_enhanced_transforms(mode='val', image_size=224)
 
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    print(f"Device: {device}")
+    train_dataset = DermNetDataset(root_dir=train_dir, transform=train_transform)
+    val_dataset = DermNetDataset(root_dir=val_dir, transform=val_transform)
 
-    train_tfms, test_tfms = get_transforms(image_size=args.image_size)
+    logging.info(f'Total training samples: {len(train_dataset)}')
+    logging.info(f'Total validation samples: {len(val_dataset)}')
 
-    train_dir = os.path.join(args.data_dir, "train")
-    test_dir = os.path.join(args.data_dir, "val")
+    logging.info(f'Training directory: {train_dir}')
+    logging.info(f'Classes found: {train_dataset.classes}')
+    logging.info(f'Class to index mapping: {train_dataset.class_to_idx}')
+    logging.info(f'Unique labels in training: {set(train_dataset.labels)}')
+    
+    # Weighted sampler for balanced sampling
+    sampler = get_sampler(train_dataset.labels)
 
-    train_ds = datasets.ImageFolder(train_dir, transform=train_tfms)
-    test_ds = datasets.ImageFolder(test_dir, transform=test_tfms)
+    train_loader = DataLoader(
+        train_dataset, batch_size=64, sampler=sampler, num_workers=8, persistent_workers=True
+    )
+    val_loader = DataLoader(
+        val_dataset, batch_size=64, shuffle=False, num_workers=8, persistent_workers=True
+    )
 
-    train_loader = DataLoader(train_ds, batch_size=args.batch_size, shuffle=True,
-                              num_workers=args.num_workers, pin_memory=True)
-    test_loader = DataLoader(test_ds, batch_size=args.batch_size, shuffle=False,
-                             num_workers=args.num_workers, pin_memory=True)
+    num_classes = len(train_dataset.classes)
+    logging.info(f'Number of classes: {num_classes}')
+    
+    if num_classes == 0:
+        logging.error("No classes found in the dataset. Please check your directory structure.")
+        return
+    
+    logging.info(f"setting up {num_classes}-class classification problem")
 
-    class_names = train_ds.classes
-    print(f"Classes: {class_names}")
+    model = CNN(num_classes=num_classes).to(device)
 
-    model = get_model(num_classes=len(class_names)).to(device)
-    optimizer = optim.Adam(model.parameters(), lr=args.lr)
+    criterion = nn.CrossEntropyLoss()
+    optimizer = optim.Adam(model.parameters(), lr=1e-3)
 
     best_val_acc = 0.0
-    start_time = time()
+    num_epochs = 10
 
-    for epoch in range(1, args.epochs + 1):
-        train_loss, train_acc = train_one_epoch(model, train_loader, optimizer, device)
-        val_loss, val_acc = evaluate(model, test_loader, device)
+    for epoch in range(num_epochs):
+        start_time = time.time()
 
-        print(f"Epoch {epoch:02d}/{args.epochs} | "
-              f"train_loss: {train_loss:.4f} | train_acc: {train_acc:.4f} | "
-              f"val_loss: {val_loss:.4f} | val_acc: {val_acc:.4f}")
+        train_loss, train_acc = train(model, device, train_loader, criterion, optimizer)
+        val_loss, val_acc = validate(model, device, val_loader, criterion)
+
+        epoch_duration = time.time() - start_time
+        logging.info(f'Epoch {epoch+1}/{num_epochs} completed in {epoch_duration:.2f} seconds')
+        logging.info(f'Train loss: {train_loss:.4f} | Train acc: {train_acc:.4f}')
+        logging.info(f'Val loss: {val_loss:.4f} | Val acc: {val_acc:.4f}')
 
         if val_acc > best_val_acc:
             best_val_acc = val_acc
-            save_checkpoint(args.out, model, class_names)
-            print(f"  ↳ Saved best model to {args.out}")
+            torch.save(model.state_dict(), 'best_model.pth')
+            logging.info('Best model saved!')
 
-    total_time = time() - start_time
-    print(f"Training complete in {total_time/60:.1f} min. Best val_acc: {best_val_acc:.4f}")
-
-    print("\nEvaluating on test set with 'neither' threshold...")
-    summary = evaluate_with_neither(model, test_loader, device, class_names, args.threshold)
-    print("Summary:", summary)
-
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
