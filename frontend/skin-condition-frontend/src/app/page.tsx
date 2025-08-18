@@ -1,95 +1,55 @@
 import ImageUpload from "@/app/ImageUpload";
-import { Shield, Stethoscope, Upload, AlertCircle } from "lucide-react";
-import { SocialIcon } from "react-social-icons"; 
+import { AlertCircle } from "lucide-react";
+import { SocialIcon } from "react-social-icons";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
+    <main className="min-h-screen bg-neutral-950 text-neutral-100 flex flex-col">
+      <div className="max-w-5xl mx-auto px-6 py-16 flex flex-col items-center gap-12">
+        
 
-      <div className="max-w-4xl mx-auto px-4 py-12">
-
-        <div className="text-center mb-12">
-          <h2 className="text-5xl font-bold text-gray-900 mb-6 leading-tight">
-            Skin Condition
-            <span className="block text-pink-600">Classification</span>
-          </h2>
-          
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-8 leading-relaxed">
-            Upload a clear image of your skin condition and receive an AI-powered analysis: acne/rosacea or eczema. 
+        <div className="text-center space-y-4">
+          <h1 className="text-4xl font-bold tracking-tight">
+            Skin Condition <span className="text-teal-400">Classifier</span>
+          </h1>
+          <p className="text-neutral-400 max-w-xl mx-auto text-lg">
+            Upload a clear image of your skin condition to receive an AI-powered 
+            analysis: acne/rosacea or eczema.
           </p>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8 mb-8">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="p-2 bg-green-100 rounded-lg">
-              <Upload className="h-5 w-5 text-green-600" />
-            </div>
-            <h3 className="text-xl font-semibold text-gray-900">Upload Image</h3>
-          </div>
-          
+
+        <div className="w-full bg-neutral-900/60 backdrop-blur-md border border-neutral-800 rounded-2xl p-10 shadow-lg">
+          <h3 className="text-lg font-semibold mb-6">Upload Image</h3>
           <ImageUpload />
         </div>
 
-        <div className="bg-amber-50 border border-amber-200 rounded-xl p-6">
+
+        <div className="w-full bg-amber-900/20 border border-amber-700 rounded-xl p-6">
           <div className="flex gap-3">
-            <AlertCircle className="h-5 w-5 text-amber-600 flex-shrink-0 mt-0.5" />
+            <AlertCircle className="h-5 w-5 text-amber-400 mt-0.5" />
             <div>
-              <h4 className="font-semibold text-amber-800 mb-2">Important Medical Disclaimer</h4>
-              <p className="text-amber-700 text-sm leading-relaxed">
-                This tool is for personal project purposes only and should not replace professional medical advice. 
-                Always consult with a qualified dermatologist or healthcare provider for proper diagnosis and treatment. 
-                In case of emergency or serious concerns, seek immediate medical attention.
+              <h4 className="font-semibold text-amber-300 mb-2">
+                Important Medical Disclaimer
+              </h4>
+              <p className="text-amber-200 text-sm leading-relaxed">
+                This tool is for personal project purposes only and should not 
+                replace professional medical advice. Always consult a qualified 
+                dermatologist or healthcare provider for diagnosis and treatment.
               </p>
             </div>
           </div>
         </div>
 
-        <div className="bg-gray-50 rounded-xl p-8 mt-12">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Tips for Best Results</h3>
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="flex gap-3">
-              <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-              <p className="text-gray-700 text-sm">Use good lighting and take photos in natural light when possible</p>
-            </div>
-            <div className="flex gap-3">
-              <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-              <p className="text-gray-700 text-sm">Ensure the affected area is clearly visible and in focus</p>
-            </div>
-            <div className="flex gap-3">
-              <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-              <p className="text-gray-700 text-sm">Clean the area before taking the photo for better clarity</p>
-            </div>
-            <div className="flex gap-3">
-              <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-              <p className="text-gray-700 text-sm">Include some surrounding healthy skin for context</p>
-            </div>
+        {/* Footer */}
+        <footer className="pt-12 border-t border-neutral-800 w-full text-center">
+          <p className="text-sm text-neutral-400 mb-4">Connect with me</p>
+          <div className="flex justify-center gap-6">
+            <SocialIcon url="https://github.com/BenjaminCMorka" bgColor="#fff" fgColor="#000" style={{ height: 36, width: 36 }} />
+            <SocialIcon url="https://linkedin.com/in/benjamin-morka" bgColor="#0A66C2" fgColor="#fff" style={{ height: 36, width: 36 }} />
           </div>
-        </div>
-
+        </footer>
       </div>
-
-      <footer className="text-gray-900 py-6 text-center bg-gradient-to-t from-green-50 via-white to-blue-50 mt-12 border-t border-gray-200">
-        <p className="text-lg mb-2 font-semibold">Connect with me</p>
-        <div className="space-x-8 flex justify-center">
-          <SocialIcon
-            url="https://github.com/BenjaminCMorka"
-            target="_blank"
-            rel="noopener noreferrer"
-            bgColor="#000000"
-            fgColor="#ffffff"
-            style={{ height: 40, width: 40 }}
-          />
-          <SocialIcon
-            url="https://linkedin.com/in/benjamin-morka"
-            target="_blank"
-            rel="noopener noreferrer"
-            bgColor="#0A66C2"
-            fgColor="#ffffff"
-            style={{ height: 40, width: 40 }}
-          />
-        </div>
-      </footer>
-      
     </main>
   );
 }
