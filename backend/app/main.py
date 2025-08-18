@@ -42,7 +42,7 @@ async def predict(file: UploadFile = File(...)):
         outputs = model(input_tensor)
         _, predicted = torch.max(outputs, 1)
     
-    labels = {0: "Acne and Rosacea", 1: "Eczema"}
+    labels = {0: "Acne", 1: "Eczema"}
     prediction = labels[int(predicted.item())]
     
     return {"prediction": prediction}

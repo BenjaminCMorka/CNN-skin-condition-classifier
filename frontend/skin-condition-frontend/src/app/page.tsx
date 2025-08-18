@@ -13,7 +13,8 @@ export default function Home() {
             Skin Condition <span className="text-teal-600">Classifier</span>
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Upload a clear image of your skin condition to receive an AI analysis: Acne/Rosacea or Eczema.
+            Upload a clear image of your skin condition to receive an AI analysis: 
+            Acne or Eczema.
           </p>
         </div>
 
