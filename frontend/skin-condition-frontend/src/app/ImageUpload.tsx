@@ -58,20 +58,20 @@ const ImageUpload: React.FC = () => {
   };
 
   return (
-        <div className="space-y-6">
-          <div
-            className={`border-2 border-dashed rounded-xl p-10 text-center transition-colors cursor-pointer ${
-              isDragOver
-                ? "border-teal-400 bg-neutral-800/60"
-                : "border-neutral-700 bg-neutral-900/50 hover:border-teal-500"
-            }`}
-            onDragOver={(e) => {
-              e.preventDefault();
-              setIsDragOver(true);
-            }}
-            onDragLeave={() => setIsDragOver(false)}
-            onDrop={handleDrop}
-        >
+<div
+  className={`rounded-xl p-10 text-center transition-colors cursor-pointer
+    ${isDragOver
+      ? "border border-teal-400 bg-neutral-800/60 shadow-lg"
+      : "border border-neutral-700 bg-neutral-900/50 hover:border-teal-500/60"
+    }`}
+  onDragOver={(e) => {
+    e.preventDefault();
+    setIsDragOver(true);
+  }}
+  onDragLeave={() => setIsDragOver(false)}
+  onDrop={handleDrop}
+>
+
         <input
           type="file"
           accept="image/*"
