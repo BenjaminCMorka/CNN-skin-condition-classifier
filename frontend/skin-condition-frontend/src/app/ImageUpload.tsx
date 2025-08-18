@@ -58,20 +58,20 @@ const ImageUpload: React.FC = () => {
   };
 
   return (
-<div
-  className={`rounded-xl p-10 text-center transition-colors cursor-pointer
-    ${isDragOver
-      ? "border border-teal-400 bg-neutral-800/60 shadow-lg"
-      : "border border-neutral-700 bg-neutral-900/50 hover:border-teal-500/60"
-    }`}
-  onDragOver={(e) => {
-    e.preventDefault();
-    setIsDragOver(true);
-  }}
-  onDragLeave={() => setIsDragOver(false)}
-  onDrop={handleDrop}
->
-
+    <div className="space-y-6">
+      <div
+        className={`rounded-xl p-10 text-center transition-colors cursor-pointer ${
+          isDragOver
+            ? "border border-teal-400 bg-neutral-800/60 shadow-lg"
+            : "border border-neutral-700 bg-neutral-900/50 hover:border-teal-500/60"
+        }`}
+        onDragOver={(e) => {
+          e.preventDefault();
+          setIsDragOver(true);
+        }}
+        onDragLeave={() => setIsDragOver(false)}
+        onDrop={handleDrop}
+      >
         <input
           type="file"
           accept="image/*"
@@ -90,7 +90,9 @@ const ImageUpload: React.FC = () => {
                 <p className="text-lg font-medium text-neutral-200 mb-2">
                   Drag & drop or click to upload
                 </p>
-                <p className="text-sm text-neutral-500">PNG, JPG, JPEG up to 10MB</p>
+                <p className="text-sm text-neutral-500">
+                  PNG, JPG, JPEG up to 10MB
+                </p>
               </div>
               <div className="px-6 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors">
                 Choose File
