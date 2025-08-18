@@ -62,8 +62,8 @@ const ImageUpload: React.FC = () => {
       <div
         className={`rounded-xl p-10 text-center transition-colors cursor-pointer ${
           isDragOver
-            ? "border border-teal-400 bg-neutral-800/60 shadow-lg"
-            : "border border-neutral-700 bg-neutral-900/50 hover:border-teal-500/60"
+            ? "border border-teal-400 bg-teal-50"
+            : "border border-gray-300 bg-gray-50 hover:border-teal-500"
         }`}
         onDragOver={(e) => {
           e.preventDefault();
@@ -83,18 +83,18 @@ const ImageUpload: React.FC = () => {
         {!preview ? (
           <label htmlFor="file-input" className="block">
             <div className="flex flex-col items-center gap-4">
-              <div className="p-4 bg-neutral-800 rounded-full">
-                <ImageIcon className="h-8 w-8 text-teal-400" />
+              <div className="p-4 bg-teal-100 rounded-full">
+                <ImageIcon className="h-8 w-8 text-teal-600" />
               </div>
               <div>
-                <p className="text-lg font-medium text-neutral-200 mb-2">
+                <p className="text-lg font-medium text-gray-900 mb-2">
                   Drag & drop or click to upload
                 </p>
-                <p className="text-sm text-neutral-500">
+                <p className="text-sm text-gray-500">
                   PNG, JPG, JPEG up to 10MB
                 </p>
               </div>
-              <div className="px-6 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors">
+              <div className="px-6 py-2 bg-teal-600 text-white rounded-full hover:bg-teal-700 transition-colors">
                 Choose File
               </div>
             </div>
@@ -112,7 +112,7 @@ const ImageUpload: React.FC = () => {
                 <img
                   src={preview}
                   alt="Preview"
-                  className="max-w-full max-h-64 rounded-lg shadow-lg"
+                  className="max-w-full max-h-64 rounded-lg shadow-md"
                 />
                 <button
                   onClick={clearFile}
@@ -125,14 +125,14 @@ const ImageUpload: React.FC = () => {
               <div className="flex gap-3 justify-center">
                 <label
                   htmlFor="file-input"
-                  className="px-4 py-2 bg-neutral-800 text-neutral-300 rounded-lg hover:bg-neutral-700 transition-colors cursor-pointer"
+                  className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition-colors cursor-pointer"
                 >
                   Change Image
                 </label>
                 <button
                   onClick={handleUpload}
                   disabled={!file || isUploading}
-                  className="px-6 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 disabled:bg-neutral-700 disabled:cursor-not-allowed transition-colors flex items-center gap-2"
+                  className="px-6 py-2 bg-teal-600 text-white rounded-full hover:bg-teal-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors flex items-center gap-2"
                 >
                   {isUploading ? (
                     <>
@@ -161,33 +161,33 @@ const ImageUpload: React.FC = () => {
             exit={{ opacity: 0 }}
             className={`p-6 rounded-xl border ${
               result.includes("Error")
-                ? "bg-red-900/30 border-red-700"
-                : "bg-teal-900/30 border-teal-700"
+                ? "bg-red-50 border-red-200"
+                : "bg-green-50 border-green-200"
             }`}
           >
             <div className="flex items-center gap-3">
               <div
                 className={`p-2 rounded-lg ${
-                  result.includes("Error") ? "bg-red-800" : "bg-teal-800"
+                  result.includes("Error") ? "bg-red-100" : "bg-green-100"
                 }`}
               >
                 {result.includes("Error") ? (
-                  <X className="h-5 w-5 text-red-300" />
+                  <X className="h-5 w-5 text-red-600" />
                 ) : (
-                  <ImageIcon className="h-5 w-5 text-teal-300" />
+                  <ImageIcon className="h-5 w-5 text-green-600" />
                 )}
               </div>
               <div>
                 <h4
                   className={`font-semibold ${
-                    result.includes("Error") ? "text-red-300" : "text-teal-300"
+                    result.includes("Error") ? "text-red-800" : "text-green-800"
                   }`}
                 >
                   {result.includes("Error") ? "Analysis Failed" : "Analysis Complete"}
                 </h4>
                 <p
                   className={`text-sm ${
-                    result.includes("Error") ? "text-red-400" : "text-teal-200"
+                    result.includes("Error") ? "text-red-700" : "text-green-700"
                   }`}
                 >
                   {result.includes("Error") ? result : `Detected: ${result}`}
