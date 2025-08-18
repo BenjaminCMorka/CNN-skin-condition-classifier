@@ -1,6 +1,6 @@
 # Skin Condition Classifier
 
-Skin Condition Classifier is a deep learning project that uses convolutional neural networks (CNNs) to classify images of skin conditions, focusing on distinguishing **Acne and Rosacea** from **Eczema**. The project utilizes the **DermNet** dataset and provides an end-to-end pipeline for data preparation, model training, and inference.
+Skin Condition Classifier is a deep learning project that uses convolutional neural networks (CNNs) to classify images of skin conditions, focusing on distinguishing **Acne** from **Eczema**. The project utilizes the **DermNet** dataset and provides an end-to-end pipeline for data preparation, model training, and inference.
 
 ---
 
@@ -27,7 +27,7 @@ This project aims to develop an accurate and robust image classifier to assist d
 - CNN architecture customized for skin lesion image classification
 - Trained with data augmentation for improved generalization
 - Model weights saved as `best_model.pth`
-- Achieved 80% classification accuracy on the test set distinguishing Acne and Rosacea from Eczema
+- Achieved 80% classification accuracy on the test set distinguishing Acne from Eczema
 
 ---
 
